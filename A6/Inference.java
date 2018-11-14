@@ -1,4 +1,4 @@
-/* Name: <your name here>
+/* Name: Maria Vivanco
    File: Inference.java
 
    Write the most general type for each of the following methods. Note that
@@ -17,14 +17,12 @@ import java.util.*;
 
 public class Inference
 {
-  // TODO : Swap the two elements in an HPair
   // HPair: Takes reference types
   public static <Object> void hpairSwap(HPair <Object,Object> hpair)
   {
     Object temp = hpair.getFirst(); // getFirst: returns first Type, in this case :  C
     hpair.setFirst(hpair.getSecond()); // setFirst(C), getSecond: returns second type: type D
     hpair.setSecond(temp); // setSecond(D) -- takes in second type
-
   }
   // Copy the elements of an HPair into a Pair
   public static <A> void setPair(Pair<A> pair, HPair <A,A> hpair)
@@ -40,14 +38,14 @@ public class Inference
     hpair.setSecond(pair.getSecond());
   }
 
-  //TODO: Given a map m, add a new binding in m for each value v in m, where v maps to itself
-  // public static ... selfMap(... m)
-  // {
-  //   for(... v : new ArrayList<>(m.values()))
-  //   {
-  //     m.put(v,v);
-  //   }
-  // }
+  //Given a map m, add a new binding in m for each value v in m, where v maps to itself
+  public static <V> void selfMap(Map <V,V> m)
+  {
+    for(V v : new ArrayList<>(m.values()))
+    {
+      m.put(v,v);
+    }
+  }
 
   // TODO: Add all the elements in a collection of collections into a target data structure.
   //  public static <T> void unions(Collection <T> to , Collection <Collection <T>> from)
@@ -81,7 +79,7 @@ public class Inference
     }
   }
 
-  // Find the maximum element in a collection of collections; returns null
+  // TODO: Find the maximum element in a collection of collections; returns null
   // if there are no elements in the collections
   public static <T extends Comparable<T>> T maxs(Collection <Collection<T>>  colls)
   {
@@ -106,7 +104,7 @@ public class Inference
     return max;
   }
 
-  // Given a collection from, copy all the elements from 'from' into several "to" collections
+  //TODO: Given a collection from, copy all the elements from 'from' into several "to" collections
   // tos - collection of collections
   public static <T> void copyTo(Collection<T> from, Collection<Collection<T>> tos)
   {
@@ -119,53 +117,53 @@ public class Inference
     }
   }
 
-  // // TODO: Reverse a map; that is, produce a new map where each value in the original maps to its
-  // // key. If a value in the original is mapped to by several keys, the resulting map will
-  // // map that value to one such key, chosen arbitrarily.
-  //
-  // public static ... reverseMap(... m)
-  // {
-  //   ... result = new ComparableTreeMap<>();
-  //   for(... k : m.keySet())
-  //   {
-  //     result.put(m.get(k), k);
-  //   }
-  //   return result;
-  // }
+  // TODO: Reverse a map; that is, produce a new map where each value in the original maps to its
+  // key. If a value in the original is mapped to by several keys, the resulting map will
+  // map that value to one such key, chosen arbitrarily.
 
-  // // TODO:Like reverseMap, but if a value is mapped by multiple keys, stores all such keys
-  // // in a set.
-  // public static ... reverseMapMany(... m)
-  // {
-  //   ... result = new HashMap<>();
-  //   for(... k : m.keySet())
-  //   {
-  //     ... v = m.get(k);
-  //     if(!result.containsKey(v))
-  //     {
-	// result.put(v, new HashSet<>());
-  //     }
-  //     result.get(v).add(k);
-  //   }
-  //   return result;
-  // }
-  //
-  // // Extract the keys and values from a map.
-  // public static ... keysAndValues(... m)
-  // {
-  //   return new HPair<>(m.keySet(), m.values());
-  // }
+  public static <K extends Comparable<? super K>,V> ComparableTreeMap reverseMap(Map<K,V> m)
+  {
+    ComparableTreeMap result = new ComparableTreeMap<>();
+    for(K k : m.keySet())
+    {
+      result.put(m.get(k), k);
+    }
+    return result;
+  }
 
-  //TODO: Given two lists, produce a list of Pairs of the corresponding elements of the lists.
-  // public static <T> List<Pair<T>> zip(List <T> as, List<T> bs)
-  // {
-  //   ArrayList <T> result = new ArrayList<>();
-  //   for(int i = 0; i < as.size() && i < bs.size(); i++)
-  //   {
-  //     result.add(new Pair<>(as.get(i), bs.get(i)));
-  //   }
-  //   return result;
-  // }
+  // Like reverseMap, but if a value is mapped by multiple keys, stores all such keys
+  // in a set.
+  public static <K,V> HashMap <V,? extends Set<K>> reverseMapMany(Map<K,V> m)
+  {
+    HashMap <V, HashSet <K>> result = new HashMap<>();
+    for(K k : m.keySet())
+    {
+      V v = m.get(k);
+      if(!result.containsKey(v))
+      {
+	       result.put(v, new HashSet<>());
+      }
+      result.get(v).add(k);
+    }
+    return result;
+  }
+
+  // Extract the keys and values from a map.
+  public static <K,V> HPair <? extends Collection <K>, ? extends Collection <V>> keysAndValues(Map <K,V> m)
+  {
+    return new HPair<>(m.keySet(), m.values());
+  }
+
+  // TODO: Given two lists, produce a list of Pairs of the corresponding elements of the lists.
+  public static <T> List<Pair<T>> zip(List <T> as, List<T> bs)
+  {
+    ArrayList <Pair <T>> result = new ArrayList<>();
+    for(int i = 0; i < as.size() && i < bs.size(); i++)
+    {
+      result.add(new Pair<>(as.get(i), bs.get(i)));
+    }
+    return result;
+  }
 
   // Given a list of Pairs, produce a Pair of lists containing the original elements
   public static <T> Pair <List <T>> unzip(List <Pair <T>> asbs) // asbs: list of pairs
@@ -181,28 +179,28 @@ public class Inference
   }
 
   // TODO: Given two lists, produce a list of HPairs of the corresponding elements of the lists.
-  // public static ... hzip(... as, ... bs)
-  // {
-  //   ... result = new ArrayList<>();
-  //   for(int i = 0; i < as.size() && i < bs.size(); i++)
-  //   {
-  //     result.add(new HPair<>(as.get(i), bs.get(i)));
-  //   }
-  //   return result;
-  // }
+  public static <A,B> List <HPair <A,B>> hzip(List <A> as, List <B> bs)
+  {
+    ArrayList <HPair <A,B>> result = new ArrayList<>();
+    for(int i = 0; i < as.size() && i < bs.size(); i++)
+    {
+      result.add(new HPair<>(as.get(i), bs.get(i)));
+    }
+    return result;
+  }
 
   // TODO: Given a list of HPairs, produce an HPair of lists containing the original elements.
-  // public static ... hunzip(... asbs)
-  // {
-  //   ... as = new ArrayList<>();
-  //   ... bs = new ArrayList<>();
-  //   for(... pair : asbs)
-  //   {
-  //     as.add(pair.getFirst());
-  //     bs.add(pair.getSecond());
-  //   }
-  //   return new HPair<>(as, bs);
-  // }
+  public static <A,B> HPair<List<A>,List<B>> hunzip(List <HPair <A,B>> asbs)
+  {
+    ArrayList <A> as = new ArrayList<>();
+    ArrayList <B> bs = new ArrayList<>();
+    for(HPair <A,B> pair : asbs)
+    {
+      as.add(pair.getFirst());
+      bs.add(pair.getSecond());
+    }
+    return new HPair<>(as, bs);
+  }
 
   // Given a collection of pairs, return the String representation of the greater element
   // of the pair, according to compareTo.
@@ -228,7 +226,8 @@ public class Inference
 
   public static void main(String[] args)
   {
-    Pair<String> pairString = new Pair<>(); // compiles
+
+    Pair<String> pairString = new Pair<>();
     Pair<Integer> pairInteger = new Pair<> (2,3); // compiles
     Pair<Object> pairObject = new Pair<>("2",2); // compiles
     Pair<ArrayList<Integer>> pairArrayList  = new Pair<>(); // compiles
@@ -259,10 +258,10 @@ public class Inference
     setHPair(hpair, pairObject2); // passes
 
     /***** selfMap() tests *****/
-    // TreeMap<String, String> mapString = new TreeMap<>();
-    // mapString.put("Monday", "Tuesday");
-    // mapString.put("Tuesday", "Wednesday");
-    // selfMap(mapString);
+    TreeMap<String, String> mapString = new TreeMap<>();
+    mapString.put("Monday", "Tuesday");
+    mapString.put("Tuesday", "Wednesday");
+    selfMap(mapString);
 
     /***** unions() test *****/
     ArrayList<ArrayList<String>> stringss = new ArrayList<>();
@@ -278,25 +277,23 @@ public class Inference
 
 
      sort(strings);
-     String max = maxs(stringss);
-    //
-    // copyTo(strings, stringss);
-    //
-    // mapString = reverseMap(mapString);
-    //
-    // Map<String, ? extends Set<String>> reversed = reverseMapMany(mapString);
-    //
-    // HPair<? extends Collection<String>, ? extends Collection<String>> kv = keysAndValues(mapString);
-    //
-    // List<Pair<String>> zipped = zip(strings, strings);
-    //
-    // Pair<? extends List<String>> unzipped = unzip(zipped);
-    //
-    // List<HPair<String, String>> hzipped = hzip(strings, strings);
-    //
-    // HPair<? extends List<String>, ? extends List<String>> hunzipped = hunzip(hzipped);
-    //
-    // Collection<String> maxes = maxes(hzipped);
+     //String max = maxs(strings);
+    //copyTo(strings, stringss);
+
+     mapString = reverseMap(mapString);
+     Map<String, ? extends Set<String>> reversed = reverseMapMany(mapString);
+
+     HPair<? extends Collection<String>, ? extends Collection<String>> kv = keysAndValues(mapString);
+
+     List<Pair<String>> zipped = zip(strings, strings);
+
+     Pair<? extends List<String>> unzipped = unzip(zipped);
+
+     List<HPair<String, String>> hzipped = hzip(strings, strings);
+
+     HPair<? extends List<String>, ? extends List<String>> hunzipped = hunzip(hzipped);
+
+     //Collection<String> maxes = maxes(hzipped);
 
   }
 }
