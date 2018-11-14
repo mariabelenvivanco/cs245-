@@ -1,0 +1,99 @@
+-- #2
+findWithDefault "apple" [("apple", 5), ("banana", 3), ("cookie", 6)] 0      -- 5
+findWithDefault "banana" [("apple", 5), ("banana", 3), ("cookie", 6)] 0     -- 3
+findWithDefault "cookie" [("apple", 5), ("banana", 3), ("cookie", 6)] 0     -- 6
+findWithDefault "pineapple" [("apple", 5), ("banana", 3), ("cookie", 6)] 0  -- 0
+findWithDefault 4 [(3, "a"), (10, "b"), (4, "c")] "not found"               -- "c"
+findWithDefault "cookie" [("cookie", 5), ("banana", 3), ("cookie", 6)] 0    -- 5
+findWithDefault "cookie" [] "Not Found" 				    -- "Not Found"
+findWithDefault True [(True, 5), (False, 3)] 0 				    -- 5
+
+-- #3
+find "apple" [("apple", 5), ("banana", 3), ("cookie", 6)]   -- Just 5
+find "banana" [("apple", 5), ("banana", 3), ("cookie", 6)]  -- Just 3
+find "orange" [("apple", 5), ("banana", 3), ("cookie", 6)]  -- Nothing
+find 4 [(3, "a"), (10, "b"), (4, "c")]                      -- Just "c"
+find "cookie" [("cookie", 5), ("banana", 3), ("cookie", 6)] -- Just 5
+find "aaa" [] -- Nothing
+
+-- #4
+index 2 ["a", "b", "c", "d"]   -- Just "c"
+index 5 ["a", "b", "c", "d"]   -- Nothing
+index (-1) ["a", "b", "c", "d"]   -- Nothing
+
+-- #5
+tails [1,2,3,4]   -- [[1,2,3,4], [2,3,4], [3,4], [4], []]
+tails [] -- [[]]
+
+-- #6
+factorsBelow 20 8   -- [5, 4, 2, 1]
+factorsBelow 20 10  -- [10, 5, 4, 2, 1]
+factorsBelow 13 11 -- [1]
+factorsBelow 1 1    -- [1]
+factorsBelow 0 1 -- [1]
+factorsBelow (-12) 1 -- [1]
+
+-- #7
+factors 20    -- [20, 10, 5, 4, 2, 1]
+factors 1     -- [1]
+
+-- #8
+digitsR 12345   -- [5, 4, 3, 2, 1]
+digitsR 10 -- [0, 1]
+digitsR 7 -- [7]
+
+-- #9
+digits 12345    -- [1, 2, 3, 4, 5]
+digits 10 -- [1, 0]
+digits 7 -- [7]
+
+-- #10
+undigitsR [5, 4, 3, 2, 1]   -- 12345
+undigitsR [0]   -- 0
+undigitsR []    -- 0
+
+-- #11
+undigits [1, 2, 3, 4, 5]    -- 12345
+undigits [0]   -- 0
+undigits []   -- 0
+
+-- #12a
+insert 3 [1,2,8]   -- [1,2,3,8]
+insert 3 []   -- [3]
+insert (-1) [(-1), 2]  -- [-1,-1,2]
+
+-- #12b
+insertionSort [5,3,9,10,2]   -- [2,3,5,9,10]
+insertionSort [8]    -- [8]
+insertionSort []     -- []
+insertionSort [5,3,9,10,2,3]  --[2,3,3,5,9,10]
+
+-- #13a
+select 7 [3,9,2,6]   -- (2, [7,3,9,6])
+select 6 []          -- (6, [])
+select 8 [7,10,6]    -- (6, [8,7,10])
+select 4 [3,8,3,5]   -- (3, [4,8,3,5])
+select 6 [15,12,10,22] -- (6, [15,12,10,22])
+
+-- #13b
+selectionSort [5,3,9,10,2]   -- [2,3,5,9,10]
+selectionSort [5]  -- [5]
+selectionSort []   -- []
+
+-- #14a
+merge [3,8,9] [2,4,5]   -- [2,3,4,5,8,9]
+merge [3,5] [3,5] -- [3,3,5,5]
+merge [3,5] []  -- [3,5]
+merge [1] [] -- [1]
+
+-- #14b
+split [1,2,3,4,5]   -- ([1,3,5], [2,4]) or ([1,2,3], [4,5]) or others. Order doesn't matter.
+split [] -- ([], [])
+
+-- #14c
+mergeSort [5,3,9,10,2]   -- [2,3,5,9,10]
+mergeSort []   		 -- []
+
+-- #15
+quickSort [5,3,9,10,2]   -- [2,3,5,9,10]
+quickSort []   		 -- []	

@@ -1,0 +1,55 @@
+18. What	are	different	ways	a	programming	language	can	be	efficient?	Give	examples	of
+what	you	mean.
+
+ RunTime: The run time measures the time it takes to run the executable code. For example, when defining variables in Java,
+one needs to intialize and define the type of the variable.
+For example:
+    int i = 0;
+ Whereas, in Python, variables are typeless. The variable i would be defined without the type specification. Therefore, in Java,
+ since the data types of the variables are known at compile time, the runtime would be less than in python where the absense of type
+ specification forces the runtime system to check the type. This causes execution to proceed slower.
+
+ Compile Time: The compile time is the time that it takes to turn the source code into machine code in order
+ to be an executable program.
+
+ Programming Time: The time for the programmer to write a program in the language. This also can include the
+ the level of difficulty of researching the language and access to resources. For example, C++ requires the
+ programmer to allocate memory for variables. This can increase programmer time because a. it is another thing
+ to type and b. it can be easy to forget and cause major issues such as memory leaks. Another example can be how Haskell
+ doesn't require type signatures for functions whereas Java requires type specification.
+
+Reading: The readability of the language.
+
+
+19. The	text	describes	several	different	aspects	to	generality.	What	is	more	general	about
+Haskell's	 operators	 than	 operators	 in	 other	 languages? (This	 will	 require	 looking
+online	 – the	 answer	 is	 not	 in	 the	 text.) How	 does	 Haskell's	 ability	 to	 overload
+operators	differ	 from	C++'s?	 (Again,	you	will	need	 to	search	online;	no	experience
+with	C++	expected. Feel	free	to	share	successful	search	terms,	etc.,	on	Piazza.)
+
+Haskell's ability to overload functions differs from C++'s since in C++ functions can have same name
+with different type signatures whereas Haskell cannot. In Haskell, operators can only be defined once,
+with one definite type. source: http://www.cse.chalmers.se/edu/year/2017/course/TDA452/lectures/OverloadingAndTypeClasses.html
+
+20. What	 is	 an	 irregularity	 in	 a	 language	 that	 you	 have	 encountered?	 Illustrate	 your
+points	with	examples.	(Note	that	irregularity is	potentially	subjective – do	your	best.)
+
+One irregularity I've encountered is the needed semicolon after defining classes vs the forbidden semicolon
+after defining functions in C++. Last year for Systems Programming, it was always hard to remember this little
+rule because this is a very specific and minor thing that can cause issues in your program.
+
+
+21. At	this	point	in	your	programming	career,	what	are	your	thoughts	on	the	tradeoffs
+discussed	in	LL's	Section	2.4?	Specifically,	should	a	programming	language	"maximize
+the	number	of	errors	that	[can] not be	made"?	Or	is	it	better	to	maximize	the	number
+of	programs that	can	be	written?	 Illustrate	your	 thoughts	with	an	example	or	 two.
+(This	should	be	about	1	paragraph.)
+
+I agree that a programming language should maximize its prevention from potential errors.
+Through issues of security and memory are important, it is also important to minimize
+errors that can cause major damage in the long run, given the different levels of experience
+of the programmers using the language. One example that I agree with from the book is that of the recycling
+of dynamic storage. In C++, the programmer must allocate storage or there could be memory leaks
+which can in itself cause security problems. Languages such as Python and Java have an automatic
+garbage collector. This difference is essential because of the high probability of a memory leak
+occurring. This type of error can be undetectable and can be detrimental to the program.

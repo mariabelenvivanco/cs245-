@@ -1,0 +1,44 @@
+Name: <Maria Vivanco>
+File: tokens.txt
+Desc: CS245 Assignment 3, Part 2
+
+9. identifier : Identifier
+10. anotherWord : Identifier
+11. I_Have_$Money : Identifier
+12. ++-+ :
+      ++: Operator
+      - : Operator - not part of the first token
+13. "string" : StringLiteral
+14. "string with words" : StringLiteral
+15. "string with \" escapes" :StringLiteral
+16. default : Keyword
+17. >>>= : Operator
+18. <<<= :
+      << : Operator
+      < - not part of the first token
+19. 123_456 : DecimalNumeral
+20. 28L : IntegerLiteral of Type Long
+21. 72K :
+      72 - IntegerLiteral
+      K - not part of first token
+22. 59_ :
+      59 - IntegerLiteral
+      _ : not part of first token
+23. _88 :
+      8 : not part of first token
+24. _34_ : Identifier
+25. 0xAB : HexNumeral
+26. 0x38B8 :HexNumeral
+
+27. 0x :
+      x:  not part of first token
+28. 0x_ :
+      0 -  IntegerLiteral
+      x_: Not part of first token
+29. 0x_3 : Hex Numeral
+30. 0_3 : Literal
+31. 0123456789 :
+    "8" : Not part of first token
+32. 0H12 :
+    H : Not part of first token
+33. 0L45 : IntegerLiteral

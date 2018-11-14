@@ -1,0 +1,44 @@
+Author: Maria Vivanco
+Assignment 5 Part 3
+File: Answers.txt
+Answers to short answer
+
+8.  Javai tracks Java's primitive types in its PrimitiveType type. Where is this declared?
+  - It is declared as a data type in javai-0.1/Language/Java/Type.hs
+9. Javai tracks binary operators in its BinaryOperator type. Where is this declared?
+  - It is declared as a data type in  javai-0.1/Language/Java/Syntax.hs
+10. What is the name javai uses for the > operator? What about the && operator? (Look at what is used in Syntax.hs, not what is used in the lexer)
+  - (>) operator: GreaterThan
+  - && operator: LogicalAnd
+11. The Language.Java.Monad module defines the Java monad. (Do not stare at its definition for very long, lest your brain explode. If you brain does explode and you wish to reassemble it, search online for monad transformers.) For our purposes, the Java monad plays the exact same role as the IO monad. Functions that work with the Java monad use do-notation, and return types are tagged with Java in the same way that they are tagged with IO. pure also works with Java: we can say pure :: a -> Java a. (Java differs from IO in that Java also allows actions to access the state of the Java interpreter – for example, the Java monad supports allocation in Java's heap.) Answer the following questions based on the functions defined in this module. Look at comments and types, not implementations.
+  a.  What function should you call to print out text in the Java monad?
+    - printJava or printLine
+  b.  What function reports errors (such as type errors or execution errors) to the user?
+    - IssueError :: String -> Java a
+12. The javai type-checker is in the Language.Java.TypeCheck module. Line 43 handles literal expressions, like 3 or true. Why does it call pure?
+  - Pure converts a pure value (with no monad tag) into one with a monad tag. Literal expression aren't monadic types but TypeCheckExpression returns a monadic type.
+13. In that same module, under the line beginning binaryExpressionType Plus, there is a check for the String type. Why? What is this trying to do?
+  - This is for the plus operator. It checks if both expressions are of type string b/c if they are the result of adding two strings would be a concatenated string of the two strings.
+
+14.  The function arithmeticExpressionType calls checkConvertibleToNumericType. What does this function do? In your answer, you may choose to ignore the unboxing conversion.
+  - checkConvertibleToNumericType checks if the type of the a given type d can be converted to Numeric types, such as int, float. This function unboxes the type of given and if the type is numeric it returns true, if not it returns false. ArithmeticExpressionType uses this to check the if the right and left side of an operand are numeric types.
+15. At a high level, what is binary numeric promotion (Section 5.6.2 of the Java Language Specification [JLS])? Illustrate the idea by including a line of Java code that demonstrates how binary numeric promotion makes a difference in the way Java behaves. (The type-checking part of binary numeric promotion is implemented in binaryNumericPromotionType.)
+  - Numeric promotion is the conversion of a smaller numeric type to a larger numeric type, so that integer and floating point operations can take place.
+    - For example: int I = 10, double d1 = 3.5, double d2 = d1 * I -> I would be promoted to double so the calculation can be performed.
+16. Section 15.1 of the JLS describes that the result of evaluating an expression can be a value, a variable, or nothing. Give an example of a Java expression that evaluates to nothing.
+  Function(3) // expression that returns nothing
+   public static void function (int x){
+    Int y = x
+  }
+17. According to the definition of the Value type (you can find it by searching), how many bits does a Java int have?
+  - 32 bits
+18. In the Language.Java.Execute module, what does the getValue function do?
+  - Convert a result to a value, issuing an error for a nothingr result, returns a monadic type of the input
+19. Describe in a few sentences how the evalBinary function works. (What work does this function do that its helper, performBinaryOp needn't worry about?)
+  - It evaultes binar expressiosn. It evalautes first the left side first and then evalutes the right die. It then gets the value of both sides using getValue to be able to perform binary operation. In this function, the value is already evaluated in order to then call performBinaryOp to perform the operation
+20. 0. Describe in a few sentences what the Plus case of performBinaryOp does, describing line by line.
+  - Plus considers the case that the types being added are strings .  It checks if the left side or right side are string value using isStringValue to check if the operation is a string concatenation. If it is then it converts both side to string in order to concatinate the string. It then returns a pure value of the addd string. It also considers the other case that the types being added are of Numeric types. In that case it performs addition on the numeric types.
+21. The performNumericalOp function's type is intricate. Read the comments there. Note that it takes four operations, because we must define how a numeric operation works on four different types: ints, longs, floats, and doubles. It also takes a checking function, so that it can check for a 0 divisor. Examine the usages of this function in performBinaryOp. In the body of performNumericalOp, the code panics if the values passed in aren't ints, longs, floats, or doubles. Why is a panic appropriate here, instead of a user error?
+  - Panic  is used to crash the program. This is better than using a user error because the program would immiediately crash if not given the correct type. Also, the error would not be made by the user but rather than the person implementing/changing the code since performNumericalOp is an internal function that is used as a helper function for other interactive functions. If nonNumeric types are applied to performNumericalOp it is not because the user incorrectly inputed them in, but rather that the logic in the code was flawed in that it made that application in the first place.
+22. The noCheck function always returns pure (). Why is it correct to say this return value indicates success?
+This return value indicates success because it returns the pure value of the given input. This is what we want because we don't need to check for a 0 integer like we do in checkDivisor. We want the value as is in order to use it for other functions.

@@ -1,0 +1,16 @@
+Maria Vivanco
+CS245
+Assignment1  : Reading Questions
+
+22. The language that the authors most closely associate with lambda calculus is LISP.
+23. Data Abstraction: integer value of 5 is an abstraction of the two's complement value 101.
+24. An abstract data type is a set of data values and the operations on those values. It is important because it allows programmers to define the behavior of the type but not the implementation. It provides a framework for a set of behaviors.
+    For example, a computer is abstract data type but a Mac is the implementation. In Java, one can use interfaces to create abstract data types such as Lists, to create variations such as ArrayLists and LinkedLists.
+
+25. Syntactic sugar is any mechanism that allows the programmer to replace a complex notation with shorthand notation.
+    Ex: i = i + 1 -> Syntactic sugar: i++
+    These two statements are interpreted the same way,  both add 1 to i.
+26. The map functions takes in a list and a function as arguments  and builds and returns a list of the results of applying the said function to each element in the given list.
+27. System.out.println(Hi Maria ) -> a variable cannot have a space in it
+28. Compiler - takes file and generates lower level code to be read by computer.
+    Interpreter - runs your file directly (ghci)

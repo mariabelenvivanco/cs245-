@@ -1,0 +1,68 @@
+GHCi, version 8.4.3: http://www.haskell.org/ghc/  :? for help
+[1 of 1] Compiling Asst2            ( Asst2.hs, interpreted )
+Ok, one module loaded.
+*Asst2> *Asst2> 5
+*Asst2> 3
+*Asst2> 6
+*Asst2> 0
+*Asst2> "c"
+*Asst2> 5
+*Asst2> "Not Found"
+*Asst2> 5
+*Asst2> *Asst2> *Asst2> Just 5
+*Asst2> Just 3
+*Asst2> Nothing
+*Asst2> Just "c"
+*Asst2> Just 5
+*Asst2> Nothing
+*Asst2> *Asst2> *Asst2> Just "c"
+*Asst2> Nothing
+*Asst2> Nothing
+*Asst2> *Asst2> *Asst2> [[1,2,3,4],[2,3,4],[3,4],[4],[]]
+*Asst2> [[]]
+*Asst2> *Asst2> *Asst2> [5,4,2,1]
+*Asst2> [10,5,4,2,1]
+*Asst2> [1]
+*Asst2> [1]
+*Asst2> [1]
+*Asst2> [1]
+*Asst2> *Asst2> *Asst2> [20,10,5,4,2,1]
+*Asst2> [1]
+*Asst2> *Asst2> *Asst2> [5,4,3,2,1]
+*Asst2> [0,1]
+*Asst2> [7]
+*Asst2> *Asst2> *Asst2> [1,2,3,4,5]
+*Asst2> [1,0]
+*Asst2> [7]
+*Asst2> *Asst2> *Asst2> 12345
+*Asst2> 0
+*Asst2> 0
+*Asst2> *Asst2> *Asst2> 12345
+*Asst2> 0
+*Asst2> 0
+*Asst2> *Asst2> *Asst2> [1,2,3,8]
+*Asst2> [3]
+*Asst2> [-1,-1,2]
+*Asst2> *Asst2> *Asst2> [2,3,5,9,10]
+*Asst2> [8]
+*Asst2> []
+*Asst2> [2,3,3,5,9,10]
+*Asst2> *Asst2> *Asst2> (2,[9,6,7,3])
+*Asst2> (6,[])
+*Asst2> (6,[10,8,7])
+*Asst2> (3,[4,8,3,5])
+*Asst2> (6,[22,15,12,10])
+*Asst2> *Asst2> *Asst2> [2,3,5,9,10]
+*Asst2> [5]
+*Asst2> []
+*Asst2> *Asst2> *Asst2> [2,3,4,5,8,9]
+*Asst2> [3,3,5,5]
+*Asst2> [3,5]
+*Asst2> [1]
+*Asst2> *Asst2> *Asst2> ([1,2],[3,4,5])
+*Asst2> ([],[])
+*Asst2> *Asst2> *Asst2> [2,3,5,9,10]
+*Asst2> []
+*Asst2> *Asst2> *Asst2> [2,3,5,9,10]
+*Asst2> []
+*Asst2> Leaving GHCi.
