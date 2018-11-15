@@ -24,22 +24,22 @@ public class Inference
     hpair.setFirst(hpair.getSecond()); // setFirst(A), getSecond: returns second type: type B
     hpair.setSecond(temp); // setSecond(B) -- takes in second type
   }
-  // Copy the elements of an HPair into a Pair
-  public static <A> void setPair(Pair<A> pair, HPair <A,A> hpair)
+  // Copy the elements of an HPair into a Pair -- need to be the same type
+  public static <A,B extends A> void setPair(Pair<? super A> pair, HPair <A,B> hpair)
   {
     pair.setFirst(hpair.getFirst());
     pair.setSecond(hpair.getSecond());
   }
 
   // Copy the contents of a Pair into an HPair
-  public static <A> void setHPair(HPair <A,A> hpair, Pair <A> pair)
+  public static <A> void setHPair(HPair <? super A,? super A> hpair, Pair <A> pair)
   {
     hpair.setFirst(pair.getFirst());
     hpair.setSecond(pair.getSecond());
   }
 
   //Given a map m, add a new binding in m for each value v in m, where v maps to itself
-  public static <V> void selfMap(Map <V,V> m)
+  public static <V> void selfMap(Map <? super V,V> m)
   {
     for(V v : new ArrayList<>(m.values()))
     {
@@ -48,7 +48,7 @@ public class Inference
   }
 
   //Add all the elements in a collection of collections into a target data structure.
-   public static <T>  void unions(Collection <T> to , Collection <? extends Collection <T>> from)
+   public static <T>  void unions(Collection <? super T> to , Collection <? extends Collection> from)
   {
     for(Collection<T> coll : from)
     {
@@ -60,7 +60,7 @@ public class Inference
   }
 
   // Sort a list in place
-  public static <T extends Comparable<T>> void sort(List <T> list)
+  public static <T extends Comparable<? super T>> void sort(List <T> list)
   {
     for(int i = 0; i < list.size() - 1; i++)
     {
@@ -81,7 +81,7 @@ public class Inference
 
   // Find the maximum element in a collection of collections; returns null
   // if there are no elements in the collections
-  public static <T extends Comparable<T>> T maxs(Collection <? extends Collection <T>>  colls)
+  public static <T extends Comparable<? super T>> T maxs(Collection <? extends Collection>  colls)
   {
     T max = null;
     for(Collection<T> coll : colls)
@@ -121,7 +121,7 @@ public class Inference
   // key. If a value in the original is mapped to by several keys, the resulting map will
   // map that value to one such key, chosen arbitrarily.
 
-  public static <K extends Comparable<? super K>,V extends Comparable<V>> ComparableTreeMap<V,K> reverseMap(Map<K,V> m)
+  public static <K extends Comparable<? super K>,V extends Comparable<? super V>> ComparableTreeMap<V,K> reverseMap(Map<K,V> m)
   {
     ComparableTreeMap<V,K> result = new ComparableTreeMap<>();
     for(K k : m.keySet())
@@ -133,9 +133,9 @@ public class Inference
 
   // Like reverseMap, but if a value is mapped by multiple keys, stores all such keys
   // in a set.
-  public static <K,V> Map <V,? extends Set<K>> reverseMapMany(Map<K,V> m)
+  public static <K,V> HashMap<V, HashSet<K>> reverseMapMany(Map<K,V> m)
   {
-    Map <V, HashSet <K>> result = new HashMap<>();
+    HashMap <V, HashSet  <K>> result = new HashMap<>();
     for(K k : m.keySet())
     {
       V v = m.get(k);
@@ -155,7 +155,7 @@ public class Inference
   }
 
   // Given two lists, produce a list of Pairs of the corresponding elements of the lists.
-  public static <T> List<Pair<T>> zip(List <T> as, List<T> bs)
+  public static <T> ArrayList<Pair<T>> zip(List <T> as, List<T> bs)
   {
     ArrayList <Pair <T>> result = new ArrayList<>();
     for(int i = 0; i < as.size() && i < bs.size(); i++)
@@ -166,7 +166,7 @@ public class Inference
   }
 
   // Given a list of Pairs, produce a Pair of lists containing the original elements
-  public static <T> Pair <List <T>> unzip(List <Pair <T>> asbs) // asbs: list of pairs
+  public static <T> Pair <? extends List <T>> unzip(List <Pair <T>> asbs) // asbs: list of pairs
   {
     ArrayList <T>  as = new ArrayList<>();
     ArrayList <T>  bs = new ArrayList<>();
@@ -178,8 +178,8 @@ public class Inference
     return new Pair<>(as, bs);
   }
 
-  // TODO: Given two lists, produce a list of HPairs of the corresponding elements of the lists.
-  public static <A,B> List <HPair <A,B>> hzip(List <A> as, List <B> bs)
+  //  Given two lists, produce a list of HPairs of the corresponding elements of the lists.
+  public static <A,B> ArrayList <HPair <A,B>> hzip(List <A> as, List <B> bs)
   {
     ArrayList <HPair <A,B>> result = new ArrayList<>();
     for(int i = 0; i < as.size() && i < bs.size(); i++)
@@ -189,8 +189,8 @@ public class Inference
     return result;
   }
 
-  // TODO: Given a list of HPairs, produce an HPair of lists containing the original elements.
-  public static <A,B> HPair<List<A>,List<B>> hunzip(List <HPair <A,B>> asbs)
+  // Given a list of HPairs, produce an HPair of lists containing the original elements.
+  public static <A,B> HPair<? extends List<A>,? extends List<B>> hunzip(List <HPair <A,B>> asbs)
   {
     ArrayList <A> as = new ArrayList<>();
     ArrayList <B> bs = new ArrayList<>();
@@ -207,9 +207,9 @@ public class Inference
   // It is an interesting puzzle as to why this must return string representations, not
   // the elements themselves. It is not required as part of this homework, but it may be
   // interesting to try to answer this question.
-  public static <T extends Comparable <T>> List<String> maxes(Collection <HPair <T,T>> coll)
+  public static <T extends Comparable <? super T>> ArrayList<String> maxes(Collection <HPair <T,T>> coll)
   {
-    List <String> result = new ArrayList<>();
+    ArrayList <String> result = new ArrayList<>();
     for(HPair<T,T> pair : coll)
     {
       if(pair.getFirst().compareTo(pair.getSecond()) > 0)
@@ -249,12 +249,14 @@ public class Inference
     //setPair (pairObject, hpairString); // doesn't compile
     setPair(pairString, hpairString); // passes
     Pair<Object> pairObject3  = new Pair<>();
-    setPair(pairObject3, hpairString); // doesn't compile
+    setPair(pairObject3, hpairString); // compiles
     HPair<String, Object> hpair2 = new HPair<>("x", "y");
     //setPair(pairString, hpair2); // doesn't pass bc cannot conform to equality contraints
     HPair<Object, Object> hpairObject = new HPair<> ("x", "y");
     //setPair(pairString,hpairObject); // doesn't pass bc cannot conform to equality contraints
-
+    Pair<Pet> pairPet = new Pair<>();
+    HPair<Pet, Dog> hpairPetDog = new HPair<>(new Dog("Fluffy Jr.", "Chihuahua"), new Dog("Ruffers", "Great Dane"));
+    setPair(pairPet, hpairPetDog);
     /***** setHPair() test*****/
     HPair<Object,Object> hpair = new HPair<>();
     Pair<Object> pairObject2 = new Pair<>("2",pairString); //compiles
@@ -266,7 +268,18 @@ public class Inference
     mapString.put("Monday", "Tuesday");
     mapString.put("Tuesday", "Wednesday");
     selfMap(mapString);
-    TreeMap<int,int> mapInt = new TreeMap<>();
+    //TreeMap<int,int> mapInt = new TreeMap<>(); // does not compile
+    HashMap<Integer, Integer> num = new HashMap<>();
+    num.put(new Integer(17), new Integer(21));
+    selfMap(num);
+    Map<Pet, Pet> mapSame = new HashMap<>();
+    mapSame.put(new Cat("Fluffy", false), new Cat("Buttercup", true));
+    mapSame.put(new Cat("Daisy", true), new Dog("Fido", "GoldenDoodle"));
+    selfMap(mapSame);
+    HashMap<Pet, Cat> mapSub = new HashMap<>();
+    mapSub.put(new Cat("Fluffy", false), new Cat("Buttercup", true));
+    mapSub.put(new Cat("Daisy", true), new Cat("Nugget", true));
+    selfMap(mapSub);
 
     /***** unions() test *****/
     ArrayList<ArrayList<String>> stringss = new ArrayList<>();
@@ -276,21 +289,87 @@ public class Inference
     stringss.get(1).add("b");
     stringss.get(0).add("c");
     stringss.get(1).add("d");
-
     ArrayList<String> strings = new ArrayList<>();
-    unions(strings, stringss);
+    unions(strings, stringss); // compiles
+    HashSet<String> set = new HashSet<>();
+    unions(set, stringss); // compiles
+    PriorityQueue <String> queue = new PriorityQueue<>();
+    unions(queue, stringss); // compiles
+    PriorityQueue<List<String>> queueList = new PriorityQueue<>();
+    unions(strings,queueList); // compiles
+
+    List<ArrayList<Cat>> listOfPets = new ArrayList<ArrayList<Cat>>();
+    ArrayList<Cat> cats1 = new ArrayList<>();
+    ArrayList<Cat> cats2 = new ArrayList<>();
+    cats1.add(new Cat("Fluffy", false));
+    cats2.add(new Cat("Daisy", true));
+    listOfPets.add(cats1);
+    listOfPets.add(cats2);
+    List<Pet> resultOfUnion = new ArrayList<>();
+    unions(resultOfUnion, listOfPets);
+
+    List<List<Dog>> listOfPets2 = new ArrayList<List<Dog>>();
+    ArrayList<Dog> dogs1 = new ArrayList<>();
+    ArrayList<Dog> dogs2 = new ArrayList<>();
+    dogs1.add(new Dog("Fido", "Goldendoole"));
+    dogs2.add(new Dog("Reggie", "Unknown"));
+    listOfPets2.add(dogs1);
+    listOfPets2.add(dogs2);
+    resultOfUnion = new ArrayList<>();
+    unions(resultOfUnion, listOfPets2);
 
 
-    sort(strings);
-    String max = maxs(stringss);
+
+    /**** sort() tests****/
+    sort(strings); //Arraylist
+    System.out.println(strings); // sorted
+
+    LinkedList <Integer> intlist = new LinkedList<Integer>();
+    intlist.add(1);
+    intlist.add(1234);
+    intlist.add(4);
+    sort(intlist);
+    System.out.println(intlist);//sorted
+
+    ArrayList<Cat> cats3 = new ArrayList<>();
+    cats3.add(new Cat("Fluffy", false));
+    cats3.add(new Cat("Daisy", true));
+    sort(cats3);
+    //sort(stringss); // doesn't compile -- can't sort arraylists
+
+
+
+    /***** maxs () tests *****/
+    String max = maxs(stringss); // Arraylist
+    LinkedList<ArrayList<Integer>> list2 = new LinkedList<> ();
+    Object max2 = maxs(list2); // compile
+
+    LinkedList<ArrayList<Object>> list3 = new LinkedList<> ();
+    //Object max3 = maxs(list3); // does not compile because Object doesn't extend Comparable
+    Pet maxP = maxs(listOfPets);
+    Dog d = maxs(listOfPets2);
+
+
+    /**** copyTo() tests ****/
     copyTo(strings, stringss);
+    copyTo(cats3, listOfPets);
 
+    /**** reverseMap() test***/
     mapString = reverseMap(mapString);
+    mapSame = reverseMap(mapSame);
+
+    /***** reverseMapMany() tests ***/
     Map<String, ? extends Set<String>> reversed = reverseMapMany(mapString);
+    HashMap<Pet, HashSet<Pet>> reversedPet = reverseMapMany(mapSame);
+    Map<Pet, ? extends Set<Pet>> reversedPet2 = reverseMapMany(mapSame);
 
     HPair<? extends Collection<String>, ? extends Collection<String>> kv = keysAndValues(mapString);
 
     List<Pair<String>> zipped = zip(strings, strings);
+    Collection<Pair<String>> zippedCollection = zip(strings, strings);
+    ArrayList<Pair<Cat>> zippedCats = zip(cats1, cats2);
+    ArrayList<Pair<Pet>> zippedCatDog = zip(cats1, dogs1);
+
 
     Pair<? extends List<String>> unzipped = unzip(zipped);
 
@@ -299,6 +378,9 @@ public class Inference
     HPair<? extends List<String>, ? extends List<String>> hunzipped = hunzip(hzipped);
 
     Collection<String> maxes = maxes(hzipped);
+    ArrayList<String> aMaxes = maxes(hzipped);
+    List<String> lMaxes = maxes(hzipped);
+
 
   }
 }
