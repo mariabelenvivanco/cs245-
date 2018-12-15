@@ -155,15 +155,15 @@ public class Inference
   }
 
   // Given two lists, produce a list of Pairs of the corresponding elements of the lists.
-  public static <T> ArrayList<Pair<T>> zip(List <T> as, List<T> bs)
-  {
-    ArrayList <Pair <T>> result = new ArrayList<>();
-    for(int i = 0; i < as.size() && i < bs.size(); i++)
-    {
-      result.add(new Pair<>(as.get(i), bs.get(i)));
-    }
-    return result;
-  }
+  // public static <T> ArrayList<Pair<T>> zip(List <T> as, List<T> bs)
+  // {
+  //   ArrayList <Pair <T>> result = new ArrayList<>();
+  //   for(int i = 0; i < as.size() && i < bs.size(); i++)
+  //   {
+  //     result.add(new Pair<>(as.get(i), bs.get(i)));
+  //   }
+  //   return result;
+  // }
 
   // Given a list of Pairs, produce a Pair of lists containing the original elements
   public static <T> Pair <? extends List <T>> unzip(List <Pair <T>> asbs) // asbs: list of pairs
@@ -224,8 +224,19 @@ public class Inference
     return result;
   }
 
+  public static <A extends Comparable<A>> A max (A a1, A a2){
+    int result = a1.compareTo(a2);
+    if (result < 0){
+      return a2;
+    } else
+      return a1;
+  }
+
   public static void main(String[] args)
   {
+
+
+
 
     Pair<String> pairString = new Pair<>();
     Pair<Integer> pairInteger = new Pair<> (2,3); // compiles
@@ -365,21 +376,23 @@ public class Inference
 
     HPair<? extends Collection<String>, ? extends Collection<String>> kv = keysAndValues(mapString);
 
-    List<Pair<String>> zipped = zip(strings, strings);
-    Collection<Pair<String>> zippedCollection = zip(strings, strings);
-    ArrayList<Pair<Cat>> zippedCats = zip(cats1, cats2);
-    ArrayList<Pair<Pet>> zippedCatDog = zip(cats1, dogs1);
+    // List<Pair<String>> zipped = zip(strings, strings);
+    // // Collection<Pair<String>> zippedCollection = zip(strings, strings);
+    // ArrayList<Pair<Cat>> zippedCats = zip(cats1, cats2);
+    // ArrayList<Pair<Pet>> zippedCatDog = zip(cats1, dogs1);
 
 
-    Pair<? extends List<String>> unzipped = unzip(zipped);
-
-    List<HPair<String, String>> hzipped = hzip(strings, strings);
-
-    HPair<? extends List<String>, ? extends List<String>> hunzipped = hunzip(hzipped);
+    // Pair<? extends List<String>> unzipped = unzip(zipped);
+    //
+    // List<HPair<String, String>> hzipped = hzip(strings, strings);
+    //
+    // HPair<? extends List<String>, ? extends List<String>> hunzipped = hunzip(hzipped);
 
     Collection<String> maxes = maxes(hzipped);
     ArrayList<String> aMaxes = maxes(hzipped);
     List<String> lMaxes = maxes(hzipped);
+
+
 
 
   }
